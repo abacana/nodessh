@@ -3,7 +3,6 @@ const axios = require('axios')
 const cors = require('cors')
 const http = require('http');
 const port = process.env.PORT || 3000
-
 const app = express();
 app.use(express.json());
 app.post("/checker", async (req, res, next) => {
@@ -12,6 +11,27 @@ app.post("/checker", async (req, res, next) => {
     }else{
         res.status(200).json({errorCode: 1, message: 'No file were uploaded.', errors:{}})
     }
+});
+var SSH = require('simple-ssh');
+
+var ssh = new SSH({
+    host: 'localhost',
+    user: 'username',
+    pass: 'password'
+});
+
+const { Client } = require('ssh2');
+const conn = new Client();
+var status= 'ppppp';
+conn.on('ready', () => {
+    console.log("sdfsdfs")
+}).on('error', (err) => {
+    console.log("99999")
+}).connect({
+    host: '14.161.48.144',
+    port: 22,
+    username: 'admin',
+    password: 'admin'
 });
 
 const server = http.createServer((req, res) => {
